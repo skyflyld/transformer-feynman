@@ -1,0 +1,211 @@
+/* ─── Transformer · Feynman 教学 —— 给初二学生讲 ─── */
+:root {
+  --bg: #0a0a12;
+  --bg2: #0f0f1a;
+  --card: #14141f;
+  --border: #1e1e35;
+  --text: #e0e0f0;
+  --text2: #8888a8;
+  --accent1: #e8d878;
+  --accent2: #78b8f0;
+  --accent3: #78d878;
+  --accent4: #f0b870;
+  --accent5: #c878f0;
+  --accent6: #f078a0;
+  --header-h: 56px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Header ─── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--header-h);
+  background: rgba(10,10,18,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+}
+header .logo { font-size: 15px; font-weight: 700; color: var(--accent1); }
+header .logo span { color: var(--text2); font-weight: 400; }
+nav { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+nav a {
+  display: block; padding: 6px 10px; font-size: 12px; color: var(--text2);
+  text-decoration: none; border-radius: 6px; white-space: nowrap;
+  transition: 0.2s;
+}
+nav a:hover, nav a.active { background: var(--card); color: var(--accent1); }
+
+/* ─── Hero ─── */
+.hero {
+  min-height: 90vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 80px 20px 40px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232,216,120,0.06) 0%, transparent 60%);
+}
+.hero h1 { font-size: clamp(28px, 5vw, 52px); font-weight: 800; margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: clamp(15px, 2.5vw, 20px); color: var(--text2); max-width: 600px; margin-bottom: 24px; }
+.hero .cta {
+  display: inline-block; padding: 12px 28px; background: var(--accent1);
+  color: #0a0a12; border-radius: 8px; font-weight: 700; font-size: 14px;
+  text-decoration: none; transition: 0.3s;
+}
+.hero .cta:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(232,216,120,0.3); }
+.hero .meta { font-size: 12px; color: #505070; margin-top: 20px; }
+
+/* ─── Chapters ─── */
+.chapter {
+  max-width: 880px; margin: 0 auto; padding: 60px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.chapter:last-of-type { border-bottom: none; }
+.chapter-num {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent1);
+  margin-bottom: 4px; text-transform: uppercase;
+}
+.chapter h2 { font-size: clamp(22px, 3.5vw, 32px); font-weight: 700; margin-bottom: 8px; }
+.chapter .subtitle { font-size: 14px; color: var(--text2); margin-bottom: 24px; }
+
+/* ─── Analogy Box ─── */
+.analogy {
+  padding: 16px 20px; border-radius: 10px;
+  background: linear-gradient(135deg, rgba(232,216,120,0.06), rgba(120,184,240,0.06));
+  border: 1px solid rgba(232,216,120,0.15);
+  margin: 16px 0;
+}
+.analogy .label { font-size: 11px; font-weight: 700; color: var(--accent1); letter-spacing: 1px; margin-bottom: 4px; }
+.analogy p { font-size: 14px; color: var(--text2); }
+
+/* ─── Two Column ─── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.col-card {
+  padding: 16px; border-radius: 8px; background: var(--card);
+  border: 1px solid var(--border);
+}
+.col-card h4 { font-size: 14px; margin-bottom: 6px; }
+.col-card p { font-size: 13px; color: var(--text2); }
+.col-card .badge {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+/* ─── Image Container ─── */
+.img-container {
+  margin: 20px 0; border-radius: 10px; overflow: hidden;
+  background: var(--card); border: 1px solid var(--border);
+}
+.img-container img {
+  width: 100%; height: auto; display: block;
+}
+.img-container .caption {
+  padding: 8px 14px; font-size: 12px; color: var(--text2);
+  background: var(--card); text-align: center;
+}
+
+/* ─── Steps / Timeline ─── */
+.steps { display: grid; gap: 12px; margin: 16px 0; }
+.step {
+  display: flex; gap: 12px; padding: 12px 16px;
+  background: var(--card); border-radius: 8px; border: 1px solid var(--border);
+}
+.step .num {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+}
+
+/* ─── People Grid ─── */
+.people-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 12px; margin: 16px 0; }
+.person {
+  padding: 14px; background: var(--card); border-radius: 8px;
+  border: 1px solid var(--border); text-align: center;
+}
+.person .name { font-size: 14px; font-weight: 700; }
+.person .role { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.person .desc { font-size: 12px; color: #707090; margin-top: 6px; }
+
+/* ─── Timeline strip ─── */
+.timeline-strip {
+  display: flex; overflow-x: auto; gap: 0; padding: 20px 0;
+  position: relative; margin: 16px 0;
+}
+.timeline-strip::before {
+  content: ''; position: absolute; top: 50%; left: 0; right: 0;
+  height: 2px; background: var(--border);
+}
+.tl-point {
+  flex: 1; min-width: 80px; display: flex; flex-direction: column;
+  align-items: center; position: relative; z-index: 1;
+}
+.tl-dot { width: 12px; height: 12px; border-radius: 50%; margin-bottom: 6px; }
+.tl-year { font-size: 11px; font-weight: 700; }
+.tl-event { font-size: 10px; color: var(--text2); text-align: center; }
+
+/* ─── Stats Row ─── */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 12px; margin: 16px 0; }
+.stat-card {
+  padding: 16px; text-align: center; background: var(--card);
+  border-radius: 8px; border: 1px solid var(--border);
+}
+.stat-card .num { font-size: 26px; font-weight: 800; }
+.stat-card .lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+/* ─── Quiz ─── */
+.quiz-box {
+  padding: 16px 20px; background: var(--card); border-radius: 10px;
+  border: 1px solid var(--accent1); margin: 20px 0;
+}
+.quiz-box .q { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.quiz-box .q::before { content: '💡 '; }
+.quiz-box .options { display: grid; gap: 8px; }
+.quiz-box .opt {
+  padding: 8px 14px; border-radius: 6px; background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border); cursor: pointer; font-size: 13px;
+  transition: 0.2s;
+}
+.quiz-box .opt:hover { border-color: var(--accent1); }
+
+/* ─── Card Grid ─── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap: 16px; margin: 16px 0; }
+.info-card {
+  padding: 18px; background: var(--card); border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.info-card .icon { font-size: 28px; margin-bottom: 8px; }
+.info-card h4 { font-size: 15px; margin-bottom: 4px; }
+.info-card p { font-size: 13px; color: var(--text2); }
+
+/* ─── Footer ─── */
+footer {
+  text-align: center; padding: 40px 20px; color: #404060; font-size: 12px;
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--accent1); text-decoration: none; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .two-col { grid-template-columns: 1fr; }
+  .people-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero { min-height: 70vh; padding: 70px 16px 30px; }
+  .chapter { padding: 40px 16px; }
+  header { padding: 0 12px; }
+  nav { gap: 2px; }
+  nav a { font-size: 11px; padding: 4px 8px; }
+}
+@media (min-width: 1024px) {
+  .chapter { padding: 80px 20px; }
+}
+@media (max-width: 480px) {
+  .people-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 24px; }
+}

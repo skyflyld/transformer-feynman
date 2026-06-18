@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
+<title>Transformer 是什么？— 给初二同学讲明白</title>
+<meta name="description" content="用教室里的故事，把影响世界的 AI 技术讲给每一位同学听。费曼式教学法，零基础也能懂。">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="logo">Transformer<span> · 费曼教室</span></div>
+  <nav>
+    <a href="#ch0">引言</a>
+    <a href="#ch1">为什么</a>
+    <a href="#ch2">注意力</a>
+    <a href="#ch3">多头</a>
+    <a href="#ch4">架构</a>
+    <a href="#ch5">影响</a>
+  </nav>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <h1>Transformer &nbsp;是什么？</h1>
+  <p>你手机里的 AI、网上的翻译软件、聊天机器人——<br>它们能"理解"你，全都靠同一项 2017 年的发明。</p>
+  <a href="#ch0" class="cta">用一个故事讲给你听 →</a>
+  <div class="meta">适合：初二及以上 · 无需编程基础 · 15 分钟读完</div>
+</section>
+
+<!-- ═══ CHAPTER 0 ═══ -->
+<section class="chapter" id="ch0">
+  <div class="chapter-num">引言 · 一个教室的故事</div>
+  <h2>如果你能同时听见所有人说话</h2>
+
+  <div class="analogy">
+    <div class="label">📖 故事时间</div>
+    <p>想象你的教室里，老师想让大家一起翻译一句英文。传统的方法是——老师点名，第一排第一个同学先翻译第一个词，然后传给第二个同学翻译第二个词……<strong>每个人都得等前面的人处理完才能开始。</strong></p>
+    <p style="margin-top:8px">但如果——<strong>全班同学同时讨论，每个人都能听到所有人的发言</strong>，一起讨论每个词的意思呢？那该多快啊！</p>
+  </div>
+
+  <p style="font-size:14px;color:var(--text2);margin-top:12px"><strong>Transformer</strong> 就是那个"全班同时讨论"的办法。它让 AI 不再"逐字排队"，而是"一眼看清整句话"。<br>这个想法，来自 2017 年一篇 15 页的论文——《Attention Is All You Need》。</p>
+
+  <div class="quiz-box">
+    <div class="q">为什么"同时讨论"比"一个一个传"更好？</div>
+    <div class="options">
+      <div class="opt">A. 因为每个人的答案不会被前面的人影响</div>
+      <div class="opt" style="border-color:var(--accent3)">B. 因为不用等——所有信息同时到达，速度更快</div>
+      <div class="opt">C. 因为"一个一个传"更准确</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHAPTER 1 ═══ -->
+<section class="chapter" id="ch1">
+  <div class="chapter-num">第一章</div>
+  <h2>为什么电脑需要一个新方法？</h2>
+  <div class="subtitle">"我打了他"和"他打了我" — 顺序决定一切</div>
+
+  <p>让电脑"理解"一句话，最核心的难题是：<strong>词的位置很重要。</strong></p>
+  <p style="margin-top:8px">"小明打了小红"和"小红打了小明"— 词没变，顺序一变，意思完全相反。电脑必须知道：谁打了谁。</p>
+
+  <div class="two-col">
+    <div class="col-card">
+      <div class="badge" style="background:rgba(240,112,80,0.15);color:#f07050">旧方法：RNN</div>
+      <h4>排队看书</h4>
+      <p>RNN 像一个人逐字阅读：读完"小明"，记住；读"打了"，更新记忆；最后读到"小红"——问题是，如果句子很长，看到后面时已经忘了前面。</p>
+    </div>
+    <div class="col-card">
+      <div class="badge" style="background:rgba(120,184,240,0.15);color:#78b8f0">新方法：Transformer</div>
+      <h4>同时摊开整本书</h4>
+      <p>Transformer 把整句话同时"摊开"：每个词都同时看其他所有词。距离再远，一步就到。不会遗忘。</p>
+    </div>
+  </div>
+
+  <div class="img-container">
+    <img src="images/rnn-vs-transformer.png" alt="RNN vs Transformer 对比图" loading="lazy">
+    <div class="caption">RNN（左）一个词一个词处理，Transformer（右）所有词同时交互</div>
+  </div>
+
+  <div class="analogy">
+    <div class="label">🧠 费曼小贴士</div>
+    <p><strong>RNN 的问题</strong>：就像你读一篇超长的小说，读到第 100 页时，已经想不起第 3 页的细节了。<br>
+    <strong>Transformer 的优势</strong>：就像你把 100 页同时摊在桌上，任何一页的内容，你都能立刻找到。</p>
+  </div>
+</section>
+
+<!-- ═══ CHAPTER 2 ═══ -->
+<section class="chapter" id="ch2">
+  <div class="chapter-num">第二章</div>
+  <h2>自注意力 — 全班同时讨论</h2>
+  <div class="subtitle">每个词重新理解上下文，只需要一步</div>
+
+  <p>Transformer 最核心的发明叫<strong>自注意力（Self-Attention）</strong>。名字听着复杂，但它背后的逻辑很简单。</p>
+
+  <div class="analogy">
+    <div class="label">🏫 还是那间教室</div>
+    <p>假设教室里有 5 个同学，每个同学代表一个词。现在他们要"讨论"这句话的意思。<br>
+    <strong>每个同学做三件事</strong>：</p>
+    <div class="steps" style="margin-top:12px">
+      <div class="step">
+        <div class="num" style="background:rgba(240,184,112,0.2);color:#f0b870">Q</div>
+        <div><strong>Query · 提问</strong>："我想问大家什么？" — 每个词都会向所有其他词提问</div>
+      </div>
+      <div class="step">
+        <div class="num" style="background:rgba(120,184,240,0.2);color:#78b8f0">K</div>
+        <div><strong>Key · 回答</strong>："我能回答什么？" — 每个词都会回应别人的提问</div>
+      </div>
+      <div class="step">
+        <div class="num" style="background:rgba(120,216,120,0.2);color:#78d878">V</div>
+        <div><strong>Value · 内容</strong>："我携带什么信息？" — 每个词都带着自己的含义</div>
+      </div>
+    </div>
+  </div>
+
+  <p>整个过程分为<strong>四个步骤</strong>：</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="num" style="background:var(--accent2);color:#0a0a12">①</div>
+      <div><strong>所有人互相提问</strong><br><span style="color:var(--text2);font-size:13px">每个词计算自己与所有其他词的相关度。词与词之间形成一个"关系网"。</span></div>
+    </div>
+    <div class="step">
+      <div class="num" style="background:var(--accent4);color:#0a0a12">②</div>
+      <div><strong>平衡影响力</strong><br><span style="color:var(--text2);font-size:13px">除以 √64（论文里最精巧的工程细节），防止某些"嗓门大"的词喧宾夺主。</span></div>
+    </div>
+    <div class="step">
+      <div class="num" style="background:var(--accent5);color:#0a0a12">③</div>
+      <div><strong>归一化</strong><br><span style="color:var(--text2);font-size:13px">通过 softmax 把权重变成百分比——每个词对其他词的关注度加起来正好 100%。</span></div>
+    </div>
+    <div class="step">
+      <div class="num" style="background:var(--accent3);color:#0a0a12">④</div>
+      <div><strong>综合输出</strong><br><span style="color:var(--text2);font-size:13px">每个词的新含义 = 所有词的含义 × 它们对这个词的关注度，加权求和。</span></div>
+    </div>
+  </div>
+
+  <div class="img-container">
+    <img src="images/self-attention.png" alt="自注意力机制详解图" loading="lazy">
+    <div class="caption">自注意力：每个输出词 = 所有输入词的加权混合，权重由 QK 相似度决定</div>
+  </div>
+
+  <div class="quiz-box">
+    <div class="q">自注意力是怎么知道"他"指的是"小明"的？</div>
+    <div class="options">
+      <div class="opt" style="border-color:var(--accent3)">A. 因为"他"的 Q 和"小明"的 K 算出来相似度最高</div>
+      <div class="opt">B. 因为"他"和"小明"在句子里的位置一样</div>
+      <div class="opt">C. 因为有人提前写好了规则</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHAPTER 3 ═══ -->
+<section class="chapter" id="ch3">
+  <div class="chapter-num">第三章</div>
+  <h2>多头注意力 — 八个不同角度的专家</h2>
+  <div class="subtitle">一个"头"看语法，一个"头"看语义，各司其职</div>
+
+  <p>如果只有一个"注意力"机制，那就像全班只有一个同学在讨论——能获得的信息很有限。Transformer 的做法更聪明：<strong>同时用 8 组注意力，每组关注不同的东西。</strong></p>
+
+  <div class="analogy">
+    <div class="label">👥 8 位专家同时工作</div>
+    <p>想象 8 位不同领域的专家同时分析同一句话：</p>
+    <div class="card-grid" style="margin-top:10px">
+      <div class="info-card"><div class="icon" style="color:#78b8f0">🔤</div><h4>语法专家</h4><p>关注句子的结构——哪个是主语，哪个是谓语</p></div>
+      <div class="info-card"><div class="icon" style="color:#f0b870">🎯</div><h4>语义专家</h4><p>关注词的含义——"苹果"是水果还是公司</p></div>
+      <div class="info-card"><div class="icon" style="color:#78d878">🔗</div><h4>指代专家</h4><p>关注代词——"他"究竟指谁</p></div>
+      <div class="info-card"><div class="icon" style="color:#c878f0">📏</div><h4>距离专家</h4><p>关注长距离依赖——头尾的词有没有关系</p></div>
+    </div>
+  </div>
+
+  <p><strong>关键洞察</strong>：没有人告诉这些"专家"各自要看什么。它们是在训练过程中<strong>自己学会分工的</strong>——有的自然分化成了语法专家，有的成了语义专家。这是 Transformer 最令人惊叹的特性之一。</p>
+
+  <div class="img-container">
+    <img src="images/multihead.png" alt="多头注意力图解" loading="lazy">
+    <div class="caption">8 个头 × 64 维 = 512 维 · 每个头关注不同的语义子空间 · 总计算量 ≈ 单头全维度</div>
+  </div>
+
+  <p style="font-size:14px;color:var(--text2)"><strong>Shazeer 的贡献</strong>：多头注意力是 Noam Shazeer（就是那篇新闻里加入 OpenAI 的那个人）的核心设计。这个设计至今没有变——GPT-4 的注意力头数更大，但结构一模一样。</p>
+</section>
+
+<!-- ═══ CHAPTER 4 ═══ -->
+<section class="chapter" id="ch4">
+  <div class="chapter-num">第四章</div>
+  <h2>完整的 Transformer 架构</h2>
+  <div class="subtitle">编码器读文章，解码器写作文</div>
+
+  <p>Transformer 的整体架构分为两大块，就像语文课上的两个活动：</p>
+
+  <div class="two-col">
+    <div class="col-card">
+      <div class="badge" style="background:rgba(120,184,240,0.15);color:#78b8f0">Encoder · 编码器</div>
+      <h4>阅读理解</h4>
+      <p>把输入句子"读懂"——每个词都看过所有其他词，得到一组富含上下文信息的向量。<br><br>
+      <strong>6 层</strong>，每层：自注意力 → 归一化 → 前馈网络 → 归一化</p>
+    </div>
+    <div class="col-card">
+      <div class="badge" style="background:rgba(240,184,112,0.15);color:#f0b870">Decoder · 解码器</div>
+      <h4>写作文</h4>
+      <p>一个字一个字地生成输出——但<strong>看不到后面的词</strong>（用遮罩挡住未来信息），同时随时参考编码器的输出。<br><br>
+      <strong>6 层</strong>，每层：遮罩自注意力 → 交叉注意力 → 前馈网络</p>
+    </div>
+  </div>
+
+  <div class="img-container">
+    <img src="images/architecture.png" alt="Transformer 完整架构图" loading="lazy">
+    <div class="caption">左侧 Encoder（阅读理解） · 右侧 Decoder（写作文） · 金色箭头 = 信息从 Encoder 流向 Decoder</div>
+  </div>
+
+  <div class="analogy">
+    <div class="label">🧩 位置编码 — 没有"座位号"，大家看起来都一样</div>
+    <p>RNN 按顺序处理，天然知道词的先后。但 Transformer 把所有词同时输入——<strong>如果不说顺序，电脑就不知道哪个词在第几个位置</strong>。</p>
+    <p style="margin-top:6px">解决办法：在输入中<strong>叠加正弦波</strong>作为"座位号"。不同位置叠加的波形不同，模型通过波形判断位置。正弦波的妙处：<strong>你告诉位置 A，它能算出位置 A+1</strong>，模型因此也能理解相对位置。</p>
+  </div>
+
+  <div class="quiz-box">
+    <div class="q">编码器和解码器的最大区别是什么？</div>
+    <div class="options">
+      <div class="opt">A. 编码器有交叉注意力，解码器没有</div>
+      <div class="opt" style="border-color:var(--accent3)">B. 解码器有遮罩（Mask），不能看未来的词</div>
+      <div class="opt">C. 编码器层数更多</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHAPTER 5 ═══ -->
+<section class="chapter" id="ch5">
+  <div class="chapter-num">第五章</div>
+  <h2>一篇论文，改变了整个世界</h2>
+  <div class="subtitle">GPT · BERT · Claude · Gemini — 全部起源于这 15 页</div>
+
+  <p>Transformer 的发表，把 AI 从"设计更精妙的架构"时代推进到了"用更多的数据和算力"时代。这场变革的意义，怎么强调都不过分。</p>
+
+  <div class="analogy">
+    <div class="label">💡 最大的改变</div>
+    <p><strong>之前</strong>：研究者花费数年设计适合特定任务的精巧网络结构。<br>
+    <strong>之后</strong>：用同一个 Transformer 架构，堆更多的数据和算力——GPT、BERT、Claude，全部是 Transformer 的变体。<br>
+    <strong>一句话</strong>：Transformer 把 AI 从"手工作坊"变成了"工业流水线"。</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="num" style="color:var(--accent2)">150,000+</div><div class="lbl">论文引用量</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--accent4)">15</div><div class="lbl">页数</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--accent3)">8</div><div class="lbl">作者 · "八子"</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--accent5)">∞</div><div class="lbl">仍在扩展的上限</div></div>
+  </div>
+
+  <div class="img-container">
+    <img src="images/legacy.png" alt="Transformer 影响与历史" loading="lazy">
+    <div class="caption">从 Transformer 到 GPT/BERT/Claude/Gemini · 短短 8 年改变了 AI 行业格局</div>
+  </div>
+
+  <!-- 8 Authors -->
+  <h3 style="margin-top:24px;font-size:16px;color:var(--accent1)">✏️ Transformer 八子 — 后来的故事</h3>
+  <div class="people-grid">
+    <div class="person"><div class="name" style="color:var(--accent4)">Noam Shazeer</div><div class="role">多头注意力设计者</div><div class="desc">Character.AI 创始人 → Google（$2.7B 买回）→ 2026 加入 OpenAI 任架构研究负责人</div></div>
+    <div class="person"><div class="name" style="color:var(--accent2)">Ashish Vaswani</div><div class="role">第一作者</div><div class="desc">Google Brain → 联合创立 Adept AI（自适应 AI 助手）</div></div>
+    <div class="person"><div class="name" style="color:var(--accent3)">Aidan Gomez</div><div class="role">联合创始人</div><div class="desc">Google → 创立 Cohere（企业级 LLM 平台，估值 $5B+）</div></div>
+    <div class="person"><div class="name" style="color:var(--accent6)">Lukasz Kaiser</div><div class="role">推理模型先驱</div><div class="desc">五年前加入 OpenAI，主导 o1/o3 推理模型开发</div></div>
+    <div class="person"><div class="name" style="color:var(--accent5)">Llion Jones</div><div class="role">第五作者</div><div class="desc">Google → 创立 Sakana AI（日本，自然启发 AI 研究）</div></div>
+    <div class="person"><div class="name">Niki Parmar</div><div class="role">核心贡献者</div><div class="desc">Google → 联合创立 Adept AI</div></div>
+    <div class="person"><div class="name">Jakob Uszkoreit</div><div class="role">联合发明人</div><div class="desc">Google → Inceptive（用 AI 设计 RNA 药物）</div></div>
+    <div class="person"><div class="name">Illia Polosukhin</div><div class="role">第八作者</div><div class="desc">Google → NEAR Protocol（区块链，Layer 1 基础设施）</div></div>
+  </div>
+
+  <!-- Companies -->
+  <h3 style="margin-top:24px;font-size:16px;color:var(--accent1)">🏢 行业格局 — 谁在用 Transformer</h3>
+  <div class="card-grid">
+    <div class="info-card"><div class="icon">🤖</div><h4>OpenAI</h4><p>GPT 系列全员 Transformer。拥有两位论文作者（Kaiser + 新加入的 Shazeer）。押注"从 Transformer 到 ASI"。</p></div>
+    <div class="info-card"><div class="icon">🔵</div><h4>Google</h4><p>BERT、PaLM、Gemini 全部基于 Transformer。两头开花——既做搜索（BERT），又做生成（Gemini）。但面临 Shazeer 出走的损失。</p></div>
+    <div class="info-card"><div class="icon">🟣</div><h4>Anthropic</h4><p>Claude 系列 Transformer-based。Karpathy 2026 年 5 月加入，用 Claude 加速预训练。约 90% 内部代码由 Claude Code 生成。</p></div>
+    <div class="info-card"><div class="icon">🟢</div><h4>Meta</h4><p>LLaMA 系列开源 Transformer 模型。不走"最大最强"路线，深耕开源生态和推理效率。</p></div>
+  </div>
+
+  <!-- Timeline -->
+  <h3 style="margin-top:24px;font-size:16px;color:var(--accent1)">📅 关键时间线</h3>
+  <div class="timeline-strip">
+    <div class="tl-point"><div class="tl-dot" style="background:var(--accent1)"></div><div class="tl-year">2017</div><div class="tl-event">Transformer 论文发表</div></div>
+    <div class="tl-point"><div class="tl-dot" style="background:var(--accent2)"></div><div class="tl-year">2018</div><div class="tl-event">GPT + BERT 诞生</div></div>
+    <div class="tl-point"><div class="tl-dot" style="background:var(--accent4)"></div><div class="tl-year">2020</div><div class="tl-event">GPT-3 · 1750亿参数</div></div>
+    <div class="tl-point"><div class="tl-dot" style="background:var(--accent3)"></div><div class="tl-year">2022</div><div class="tl-event">ChatGPT 出圈</div></div>
+    <div class="tl-point"><div class="tl-dot" style="background:var(--accent6)"></div><div class="tl-year">2023</div><div class="tl-event">GPT-4 多模态</div></div>
+    <div class="tl-point"><div class="tl-dot" style="background:var(--accent1)"></div><div class="tl-year">2026</div><div class="tl-event">Shazeer 加入 OpenAI</div></div>
+  </div>
+
+  <!-- Paper Quote -->
+  <div class="analogy" style="margin-top:20px">
+    <div class="label">📜 原文</div>
+    <p style="font-style:italic;color:var(--text2)">"The Transformer is the first sequence transduction model based entirely on attention, replacing the recurrent layers most commonly used in encoder-decoder architectures with multi-headed self-attention."</p>
+    <p style="font-size:12px;color:#505070;margin-top:6px;text-align:right">— Vaswani et al., NeurIPS 2017</p>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>Transformer 费曼教室 · 用故事理解 AI 的核心</p>
+  <p style="margin-top:4px">图文内容基于 Vaswani et al. (2017) "Attention Is All You Need" · 费曼教学法·Arsite 制作</p>
+  <p style="margin-top:4px"><a href="#top">↑ 回到顶部</a></p>
+</footer>
+
+<script>
+// Scroll spy for nav
+const sections = document.querySelectorAll('.chapter');
+const links = document.querySelectorAll('nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const id = e.target.id;
+      document.querySelector(`nav a[href="#${id}"]`)?.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+
+// Quiz interactivity
+document.querySelectorAll('.quiz-box .opt').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const parent = this.closest('.quiz-box');
+    // Highlight selection
+    parent.querySelectorAll('.opt').forEach(o => {
+      o.style.borderColor = '';
+      o.style.background = '';
+    });
+    this.style.borderColor = '#e8d878';
+    this.style.background = 'rgba(232,216,120,0.08)';
+  });
+});
+</script>
+</body>
+</html>
