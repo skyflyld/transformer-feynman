@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a12;font-family:'Noto Sans SC','PingFang SC',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+.container{width:1050px;background:#0f0f1a;border-radius:14px;border:1px solid #1e1e35;padding:32px}
+h2{font-size:22px;color:#e8d878;font-weight:700;margin-bottom:4px}
+.sub{font-size:13px;color:#8888a8;margin-bottom:20px}
+.heatmap-grid{display:grid;gap:3px;margin:10px 0;position:relative;padding-left:180px;padding-top:60px}
+.heat-label-y{position:absolute;left:0;top:60px;display:grid;gap:3px}
+.heat-label-y .lbl{height:40px;display:flex;align-items:center;justify-content:flex-end;font-size:12px;color:#8888a8;padding-right:10px}
+.heat-label-x{position:absolute;top:0;left:180px;display:flex;gap:3px}
+.heat-label-x .lbl{width:90px;height:50px;display:flex;align-items:flex-end;justify-content:center;font-size:12px;color:#8888a8;padding-bottom:6px;writing-mode:horizontal-tb}
+.row{display:flex;gap:3px}
+.cell{width:90px;height:40px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,0.5);transition:0.2s;cursor:pointer}
+.cell:hover{transform:scale(1.08)}
+.cell .val{font-size:9px;color:rgba(255,255,255,0.3)}
+.explanation{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0 12px}
+.exp-card{padding:12px 14px;background:rgba(232,216,120,0.03);border-radius:8px;border:1px solid #1e1e35}
+.exp-card h4{font-size:13px;color:#e8d878;margin-bottom:4px}
+.exp-card p{font-size:12px;color:#8888a8;line-height:1.5}
+.legend{display:flex;gap:16px;margin:12px 0;align-items:center}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#8888a8}
+.legend-bar{width:80px;height:8px;border-radius:4px;background:linear-gradient(90deg,#0a0a12,#78b8f0,#e8d878,#f078a0)}
+.sentence-demo{background:rgba(255,255,255,0.02);border:1px solid #1e1e35;border-radius:8px;padding:14px 16px;margin:16px 0}
+.sentence-demo .word{display:inline-block;padding:3px 8px;border-radius:4px;margin:2px 3px;font-size:14px;transition:0.2s}
+.sentence-demo .word:hover{transform:translateY(-2px)}
+.sd-label{font-size:11px;color:#505070;margin-bottom:6px}
+</style></head><body>
+<div class="container">
+<h2>🔍 自注意力热力图 — 全句交互式权重可视化</h2>
+<div class="sub">每个方格 = 一个词对另一个词的"关注度" · 颜色越暖 = 关注越强</div>
+
+<div class="sentence-demo">
+<div class="sd-label">示例句子：</div>
+<div><span class="word" style="background:rgba(232,216,120,0.12);border:1px solid rgba(232,216,120,0.3)">我</span>
+<span class="word" style="background:rgba(232,216,120,0.08);border:1px solid rgba(232,216,120,0.2)">非常</span>
+<span class="word" style="background:rgba(232,216,120,0.12);border:1px solid rgba(232,216,120,0.3)">喜欢</span>
+<span class="word" style="background:rgba(232,216,120,0.08);border:1px solid rgba(232,216,120,0.2)">吃</span>
+<span class="word" style="background:rgba(232,216,120,0.14);border:1px solid rgba(232,216,120,0.35)">红红的</span>
+<span class="word" style="background:rgba(232,216,120,0.16);border:1px solid rgba(232,216,120,0.4)">苹果</span></div>
+</div>
+
+<div class="heatmap-grid" id="heatmap">
+<div class="heat-label-y" id="labels-y"></div>
+<div class="heat-label-x" id="labels-x"></div>
+</div>
+
+<div class="legend">
+<div class="legend-item">关注度：<div class="legend-bar"></div></div>
+<div class="legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1a1a2e"></span> 低</div>
+<div class="legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#78b8f0"></span></div>
+<div class="legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#e8d878"></span></div>
+<div class="legend-item"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f078a0"></span> 高</div>
+</div>
+
+<div class="explanation">
+<div class="exp-card"><h4>对角线（自身关注）</h4><p>每个词最关注的永远是自己——这是注意力机制的自然特性。真正的信息在"非对角线"上。</p></div>
+<div class="exp-card"><h4>⭐ "苹果"吸引最多关注</h4><p>作为句子的核心宾语，"红红的"和"吃"都对"苹果"有高权重。"我"对"苹果"的关注最低——因为主宾距离远。</p></div>
+<div class="exp-card"><h4>"非常"修饰"喜欢"</h4><p>副词"非常"对动词"喜欢"的关注度很高（0.62）——模型学会了副词修饰动词的语法关系。</p></div>
+<div class="exp-card"><h4>"吃"连接"苹果"</h4><p>动词"吃"对宾语"苹果"的关注度达 0.71——模型正确识别了动宾关系，这是语言理解的关键。</p></div>
+</div>
+
+<script>
+const words = ['我','非常','喜欢','吃','红红的','苹果'];
+const data = [
+//   我    非常  喜欢  吃   红红的 苹果
+  [0.82, 0.02, 0.06, 0.03, 0.01, 0.06], // 我
+  [0.04, 0.78, 0.12, 0.03, 0.01, 0.02], // 非常
+  [0.08, 0.08, 0.48, 0.16, 0.05, 0.15], // 喜欢
+  [0.03, 0.02, 0.10, 0.08, 0.06, 0.71], // 吃
+  [0.01, 0.01, 0.03, 0.02, 0.16, 0.77], // 红红的
+  [0.04, 0.01, 0.08, 0.10, 0.20, 0.57]  // 苹果
+];
+
+function heatColor(v){
+  if(v<0.1) return `rgba(10,10,18,${0.3+v*0.7})`;
+  if(v<0.3) return `rgba(120,184,240,${0.3+v})`;
+  if(v<0.6) return `rgba(232,216,120,${0.3+v})`;
+  return `rgba(240,120,160,${0.3+v*0.5})`;
+}
+function textColor(v){ return v<0.35 ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.8)'; }
+
+const grid = document.getElementById('heatmap');
+const ly = document.getElementById('labels-y');
+const lx = document.getElementById('labels-x');
+
+// Y labels
+words.forEach(w => {
+  const d = document.createElement('div'); d.className='lbl';
+  d.textContent = w; ly.appendChild(d);
+});
+
+// X labels
+words.forEach(w => {
+  const d = document.createElement('div'); d.className='lbl';
+  d.textContent = w; lx.appendChild(d);
+});
+
+// Rows
+data.forEach((row, ri) => {
+  const rDiv = document.createElement('div'); rDiv.className='row';
+  row.forEach((v, ci) => {
+    const c = document.createElement('div'); c.className='cell';
+    const bg = ri===ci ? `rgba(232,216,120,0.15)` : heatColor(v);
+    c.style.background = bg;
+    c.style.color = ri===ci ? 'rgba(232,216,120,0.5)' : textColor(v);
+    c.innerHTML = ri===ci ? '●' : `${(v*100).toFixed(0)}%`;
+    if(ri!==ci) c.title = `"${words[ri]}" → "${words[ci]}": ${(v*100).toFixed(0)}%`;
+    rDiv.appendChild(c);
+  });
+  grid.appendChild(rDiv);
+});
+</script>
+</div></body></html>

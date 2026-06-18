@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a12;font-family:'Noto Sans SC','PingFang SC',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+.container{width:1050px;background:#0f0f1a;border-radius:14px;border:1px solid #1e1e35;padding:32px}
+h2{font-size:22px;color:#e8d878;font-weight:700;margin-bottom:4px}
+.sub{font-size:13px;color:#8888a8;margin-bottom:20px}
+.section-title{font-size:14px;color:#a0a0b8;font-weight:700;margin:20px 0 10px}
+.bench-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bench-card{padding:18px;border-radius:10px;border:1px solid #1e1e35}
+.bench-card h3{font-size:15px;margin-bottom:10px}
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.metric-row:last-child{border-bottom:none}
+.metric-row .label{font-size:12px;color:#8888a8}
+.metric-row .values{display:flex;gap:12px;align-items:center}
+.metric-row .values .old{font-size:11px;color:#404070;text-decoration:line-through}
+.metric-row .values .new{font-size:15px;font-weight:700}
+.chart-bar{height:16px;border-radius:8px;margin:4px 0;position:relative;overflow:hidden}
+.chart-bar .fill{height:100%;border-radius:8px;transition:0.5s}
+.chart-bar .lbl{position:absolute;left:8px;top:0;height:100%;display:flex;align-items:center;font-size:10px;font-weight:600;color:rgba(255,255,255,0.9)}
+.chart-bar .val{position:absolute;right:8px;top:0;height:100%;display:flex;align-items:center;font-size:10px;font-weight:600}
+.paper-scores{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.score-card{padding:14px;border-radius:8px;border:1px solid #1e1e35;text-align:center}
+.score-card .task{font-size:12px;color:#8888a8;margin-bottom:6px}
+.score-card .main{font-size:28px;font-weight:800;letter-spacing:-1px}
+.score-card .old-score{font-size:11px;color:#505070;margin-top:4px;text-decoration:line-through}
+.score-card .note{font-size:10px;color:#404060;margin-top:4px}
+.training-details{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.td-card{padding:12px;text-align:center;border-radius:8px;border:1px solid #1e1e35}
+.td-card .icon{font-size:20px;margin-bottom:4px}
+.td-card .val{font-size:16px;font-weight:700;color:#e8d878}
+.td-card .lbl{font-size:10px;color:#707090;margin-top:2px}
+.arch-comparison{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.arch-card{padding:14px;border-radius:8px;border:1px solid #1e1e35}
+.arch-card h4{font-size:13px;margin-bottom:6px}
+.arch-card p{font-size:12px;color:#8888a8;line-height:1.5}
+.arch-card ul{font-size:11px;color:#707090;margin-top:6px;padding-left:14px;line-height:1.6}
+.key-win{background:rgba(232,216,120,0.04);border-radius:8px;border:1px solid rgba(232,216,120,0.12);padding:12px 14px;margin:14px 0}
+.key-win strong{color:#e8d878}
+.key-win p{font-size:12px;color:#a0a0b0}
+</style></head><body>
+<div class="container">
+<h2>⚔️ Transformer vs RNN — 训练性能全面对比</h2>
+<div class="sub">基于论文原始实验数据（WMT 2014 英→德/英→法）</div>
+
+<div class="section-title">📊 翻译质量 (BLEU 分数)</div>
+<div class="paper-scores">
+<div class="score-card" style="border-color:#f078a0">
+<div class="task">WMT 2014 英→德</div>
+<div class="main" style="color:#f078a0">28.4</div>
+<div class="old-score">最佳 RNN: 26.7</div>
+<div class="note">+1.7 △ 超越当时所有方法</div>
+</div>
+<div class="score-card" style="border-color:#78b8f0">
+<div class="task">WMT 2014 英→法</div>
+<div class="main" style="color:#78b8f0">41.8</div>
+<div class="old-score">最佳 RNN: 39.1</div>
+<div class="note">+2.7 △ 同时在两个基准创纪录</div>
+</div>
+</div>
+
+<div class="section-title">⚡ 训练成本 — 算力节约</div>
+<div class="training-details">
+<div class="td-card"><div class="icon">⏱️</div><div class="val">3.5 天</div><div class="lbl">8 GPU 训练时间</div></div>
+<div class="td-card"><div class="icon">💰</div><div class="val">$100</div><div class="lbl">2017 年估算成本</div></div>
+<div class="td-card"><div class="icon">📦</div><div class="val">65M</div><div class="lbl">基础模型参数</div></div>
+<div class="td-card"><div class="icon">⚡</div><div class="val">12x</div><div class="lbl">训练吞吐量提升</div></div>
+</div>
+
+<div class="section-title">🗺️ 训练速度对比 (steps × 时间)</div>
+<div class="chart-bar"><div class="fill" style="width:100%;background:linear-gradient(90deg,#78b8f0,#e8d878)"></div><div class="lbl">Transformer</div><div class="val" style="color:#0a0a12">3.5 天 · 100K 步</div></div>
+<div class="chart-bar" style="height:14px;margin-top:2px"><div class="fill" style="width:42%;background:rgba(240,120,128,0.5)"></div><div class="lbl" style="font-size:9px">RNN (Seq2Seq + Attention)</div><div class="val" style="color:#707090;font-size:9px">~8 天 · 慢 2.8x</div></div>
+<div class="chart-bar" style="height:14px"><div class="fill" style="width:38%;background:rgba(240,120,128,0.35)"></div><div class="lbl" style="font-size:9px">RNN (ByteNet)</div><div class="val" style="color:#505050;font-size:9px">~9 天</div></div>
+
+<div class="section-title">🏛️ 架构比较 — 为什么 Transformer 赢了</div>
+<div class="arch-comparison">
+<div class="arch-card" style="border-color:rgba(240,120,128,0.3)">
+<h4 style="color:#f07880">❌ RNN (LSTM/GRU)</h4>
+<p>串行处理：第 t 步必须等 t-1 步完成</p>
+<ul><li>⚡ 训练 O(n) 步 →无法并行</li><li>🔗 长距离依赖困难（梯度消失）</li><li>📉 10+ 层时训练不稳定</li><li>📦 每个时间步共享权重</li></ul>
+</div>
+<div class="arch-card" style="border-color:rgba(120,184,240,0.3)">
+<h4 style="color:#78b8f0">✅ Transformer</h4>
+<p>并行处理：所有位置同时计算</p>
+<ul><li>⚡ 训练 O(1) 步 →完全并行</li><li>🔗 任意距离，一步可达</li><li>📈 60+ 层稳定训练</li><li>📦 每层独立参数矩阵</li></ul>
+</div>
+</div>
+
+<div class="key-win">
+<strong>🏆 论文最关键的数据点</strong>
+<p>Transformer Base 模型（65M 参数）仅用 3.5 天、8 块 GPU 训练，就超过了所有此前需要专业化架构和更长训练时间的 RNN 模型。后续 Big 模型（213M 参数）更是创下历史记录。此后，RNN 几乎从顶级会议上消失。</p>
+</div>
+
+<div class="section-title">📈 历史影响 — 论文的关键数字</div>
+<div class="bench-grid">
+<div class="bench-card" style="border-color:#1e1e35">
+<div class="metric-row"><span class="label">BLUE 英→德 (SOTA 提升)</span><span class="values"><span class="new" style="color:#78b8f0">+1.7</span></span></div>
+<div class="metric-row"><span class="label">BLUE 英→法 (SOTA 提升)</span><span class="values"><span class="new" style="color:#78b8f0">+2.7</span></span></div>
+<div class="metric-row"><span class="label">训练加速 (vs 当时最佳RNN)</span><span class="values"><span class="new" style="color:#e8d878">~3x</span></span></div>
+<div class="metric-row"><span class="label">总训练成本 (2017)</span><span class="values"><span class="new" style="color:#78d878">~$100</span></span></div>
+<div class="metric-row"><span class="label">后续衍生论文</span><span class="values"><span class="new" style="color:#c878f0">10,000+</span></span></div>
+</div>
+<div class="bench-card" style="border-color:#1e1e35">
+<div class="metric-row"><span class="label">8 位作者去向</span><span class="values"><span class="new" style="color:#e8d878">8 位创业/CTO</span></span></div>
+<div class="metric-row"><span class="label">2024 年引用量</span><span class="values"><span class="new" style="color:#f078a0">~150,000</span></span></div>
+<div class="metric-row"><span class="label">被超越年限 (RNN 统治)</span><span class="values"><span class="new" style="color:#78d878">~30 年</span></span></div>
+<div class="metric-row"><span class="label">LLM 行业市值 (2026)</span><span class="values"><span class="new" style="color:#f0b870">> $1T</span></span></div>
+<div class="metric-row"><span class="label">变更行业数量</span><span class="values"><span class="new" style="color:#78b8f0">~15</span></span></div>
+</div>
+</div>
+</div></body></html>

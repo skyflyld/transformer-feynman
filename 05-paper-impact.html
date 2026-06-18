@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a12;font-family:'Noto Sans SC','PingFang SC',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+.container{width:1050px;background:#0f0f1a;border-radius:14px;border:1px solid #1e1e35;padding:32px;position:relative}
+h2{font-size:22px;color:#e8d878;font-weight:700;margin-bottom:4px}
+.sub{font-size:13px;color:#8888a8;margin-bottom:20px}
+.paper-cite{position:absolute;top:18px;right:24px;font-size:11px;color:#505070;text-align:right}
+.paper-cite span{display:block;font-size:10px}
+.timeline{position:relative;margin:20px 0 30px;padding:0 0 0 30px;border-left:2px solid #1e1e35}
+.event{margin-bottom:18px;position:relative}
+.event::before{content:'';position:absolute;left:-36px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--c,#e8d878);border:2px solid #0f0f1a}
+.event .yr{font-size:11px;color:#505070;font-weight:700}
+.event h4{font-size:14px;font-weight:700;margin:2px 0}
+.event p{font-size:12px;color:#8888a8;line-height:1.5}
+.event .badge{display:inline-block;font-size:10px;padding:1px 7px;border-radius:3px;margin-top:3px;font-weight:600}
+.curve{height:100px;margin:10px 0;position:relative;border-bottom:1px solid #1e1e35;border-left:1px solid #1e1e35}
+.curve-bar{position:absolute;bottom:0;width:8px;border-radius:4px 4px 0 0;transition:0.3s}
+.curve-bar .lbl{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:#8888a8;white-space:nowrap}
+.curve-bar .val{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:#505070;white-space:nowrap}
+.legacy-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.lg-card{padding:14px;border-radius:8px;border:1px solid #1e1e35;background:rgba(255,255,255,0.02)}
+.lg-card .name{font-size:13px;font-weight:700}
+.lg-card .impact{font-size:11px;color:#8888a8;margin-top:3px;line-height:1.5}
+.lg-card .metric{display:flex;gap:10px;margin-top:6px}
+.lg-card .metric span{font-size:10px;padding:2px 6px;border-radius:3px;background:rgba(255,255,255,0.04);color:#707090}
+.key-insights{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.ki{font-size:12px;color:#a0a0b8;padding:8px 10px;background:rgba(232,216,120,0.04);border-radius:6px;border-left:2px solid #e8d878}
+.ki strong{color:#e8d878}
+.quote{font-style:italic;font-size:13px;color:#606080;padding:14px 16px;border-left:2px solid #505070;margin:16px 0;background:rgba(255,255,255,0.02);border-radius:0 6px 6px 0}
+.quote .src{display:block;font-size:11px;color:#404060;margin-top:4px;font-style:normal}
+</style></head><body>
+<div class="container">
+<div class="paper-cite">NeurIPS 2017 · 15 pages<span>150,000+ citations</span></div>
+<h2>📄 "Attention Is All You Need" — 论文深度解读</h2>
+<div class="sub">Vaswani et al., 2017 · 八位作者 · Google Brain</div>
+
+<div class="quote">"The Transformer is the first sequence transduction model based entirely on attention, replacing recurrent layers with multi-headed self-attention."<span class="src">— 论文摘要</span></div>
+
+<div class="key-insights">
+<div class="ki"><strong>🎯 核心贡献</strong> — 第一个完全丢弃 RNN/CNN 的序列转导模型，只靠注意力机制</div>
+<div class="ki"><strong>⚡ 效率突破</strong> — 训练速度比 RNN 快 3-5 倍，推理可并行（RNN 必须串行）</div>
+<div class="ki"><strong>🏆 精度碾压</strong> — WMT 2014 英→德 BLEU 28.4（当时 SOTA），训练仅 3.5 天 8GPU</div>
+<div class="ki"><strong>🧱 架构奠基石</strong> — Encoder+Decoder 架构，6层×512维，8头注意力，成为后续所有 LLM 的蓝本</div>
+</div>
+
+<h3 style="font-size:15px;color:#8888a8;margin:20px 0 12px">📈 引用增长曲线 — AI 史上最被引用的论文</h3>
+<div class="curve" id="cite-curve">
+  <div class="curve-bar" style="left:3%;height:5%;background:#78b8f0" title="2017"><span class="lbl">2017</span><span class="val">50</span></div>
+  <div class="curve-bar" style="left:16%;height:12%;background:#78b8f0" title="2018"><span class="lbl">2018</span><span class="val">1.5K</span></div>
+  <div class="curve-bar" style="left:29%;height:20%;background:#78b8f0" title="2019"><span class="lbl">2019</span><span class="val">5K</span></div>
+  <div class="curve-bar" style="left:42%;height:30%;background:#78b8f0" title="2020"><span class="lbl">2020</span><span class="val">15K</span></div>
+  <div class="curve-bar" style="left:55%;height:40%;background:#e8d878" title="2021"><span class="lbl">2021</span><span class="val">25K</span></div>
+  <div class="curve-bar" style="left:68%;height:55%;background:#e8d878" title="2022"><span class="lbl">2022</span><span class="val">45K</span></div>
+  <div class="curve-bar" style="left:81%;height:70%;background:#f078a0" title="2023"><span class="lbl">2023</span><span class="val">75K</span></div>
+  <div class="curve-bar" style="left:94%;height:90%;background:#f078a0" title="2024"><span class="lbl">2024</span><span class="val">110K</span></div>
+</div>
+
+<h3 style="font-size:15px;color:#8888a8;margin:24px 0 12px">📜 关键时间线 — 从论文到行业变革</h3>
+<div class="timeline">
+<div class="event" style="--c:#e8d878"><div class="yr">2017 · 论文发表</div><h4>Vision Transformer (ViT) 前身</h4><p>Transformer 最初只用于文本。论文提出纯注意力架构，证明 RNN 可以被完全替代。</p></div>
+<div class="event" style="--c:#78b8f0"><div class="yr">2018 · 双星爆发</div><h4>GPT (117M) + BERT (340M)</h4><p>OpenAI 用 Transformer Decoder 做预训练语言模型（GPT）<br>Google 用 Transformer Encoder 做双向语言理解（BERT）<br>BERT 刷新 11 项 NLP 基准，GPT 证明了"更大 = 更好"。</p></div>
+<div class="event" style="--c:#78d878"><div class="yr">2019-2020 · GPT-3 时代</div><h4>GPT-2 (1.5B) → GPT-3 (175B)</h4><p>模型参数从百万级跳至十亿级。GPT-3 证明了"大模型+大量文本"可以产生涌现能力——写诗、写代码、翻译，无需专门训练。</p></div>
+<div class="event" style="--c:#f078a0"><div class="yr">2021-2022 · 出圈</div><h4>DALL·E · ChatGPT · 全民 AI</h4><p>Transformer 从文本扩展到图像（ViT, DALL·E）、语音（Whisper）、代码（Codex）。<br>ChatGPT 在 2 个月内达到 1 亿用户，成为史上增长最快的应用。</p></div>
+<div class="event" style="--c:#e8d878"><div class="yr">2023-2026 · 行业格局形成</div><h4>GPT-4 · Claude · Gemini · LLaMA</h4><p>所有主流 LLM 都是 Transformer 的变体。架构变化越来越小，数据和算力成为核心护城河。<br>Shazeer 2026 年重新加入 OpenAI——Transformer 架构师回归。</p></div>
+</div>
+
+<h3 style="font-size:15px;color:#8888a8;margin:20px 0 12px">🏗️ 架构遗产 — Transformer 的模型家族</h3>
+<div class="legacy-grid">
+<div class="lg-card"><div class="name" style="color:#78b8f0">Encoder-Only</div><div class="impact">BERT, RoBERTa, ALBERT, DistilBERT, ELECTRA<br><span style="color:#8888a8;font-size:11px">专精"理解"——分类、情感分析、实体识别</span></div><div class="metric"><span>2018-2019</span><span>340M-1.5B 参数</span></div></div>
+<div class="lg-card"><div class="name" style="color:#f0b870">Decoder-Only</div><div class="impact">GPT-1/2/3/4, LLaMA, Claude, Gemini<br><span style="color:#8888a8;font-size:11px">专精"生成"——写作、对话、代码、推理</span></div><div class="metric"><span>2018-至今</span><span>117M → 推测 1.8T 参数</span></div></div>
+<div class="lg-card"><div class="name" style="color:#78d878">Encoder-Decoder</div><div class="impact">T5, BART, M2M-100, PEGASUS<br><span style="color:#8888a8;font-size:11px">专精"转换"——翻译、摘要、转写</span></div><div class="metric"><span>2019-2021</span><span>220M-11B 参数</span></div></div>
+<div class="lg-card"><div class="name" style="color:#c878f0">跨模态 Transformer</div><div class="impact">ViT, DALL·E, CLIP, Whisper, Flamingo<br><span style="color:#8888a8;font-size:11px">图像、语音、视频——Transformer 架构无所不在</span></div><div class="metric"><span>2020-至今</span><span>扩展到所有模态</span></div></div>
+</div>
+
+<h3 style="font-size:15px;color:#8888a8;margin:20px 0 12px">🔑 论文未被讲述的关键细节</h3>
+<div class="key-insights">
+<div class="ki"><strong>LayerNorm 的位置</strong> — Transformer 的 LayerNorm 放在残差连接之后（Post-Norm），而今天的模型几乎全部改用 Pre-Norm。这一改变虽然小，但对训练稳定性影响巨大。</div>
+<div class="ki"><strong>学习率策略</strong> — "Warmup + Inverse Square Root Decay"：先线性升温到 0.0007（前 4000 步），再按步数平方根衰减。这个策略至今仍是 Transformer 训练的标准。</div>
+<div class="ki"><strong>Label Smoothing</strong> — 论文使用了 ε=0.1 的标签平滑（让模型不要过度自信），带来 0.5 BLEU 的提升。这个技巧在后来的模型中被广泛采用。</div>
+<div class="ki"><strong>Dropout 的巧妙使用</strong> — 在残差连接和注意力权重上分别使用 dropout（0.1），防止过拟合的同时也增加注意力头的多样性。</div>
+</div>
+</div></body></html>

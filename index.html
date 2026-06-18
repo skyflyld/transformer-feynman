@@ -6,10 +6,77 @@
 <title>Transformer 是什么？— 给初二同学讲明白</title>
 <meta name="description" content="用教室里的故事，把影响世界的 AI 技术讲给每一位同学听。费曼式教学法，零基础也能懂。">
 <link rel="stylesheet" href="css/style.css">
+<style>
+/* ─── New Diagram Cards ─── */
+.diagram-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0}
+.diagram-card{display:block;padding:0;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--card);text-decoration:none;color:inherit;transition:.3s}
+.diagram-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.3);border-color:var(--accent1)}
+.diagram-card .preview{height:120px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f0f1a,#1a1a2e);padding:20px;font-size:36px}
+.diagram-card .info{padding:12px 14px}
+.diagram-card .info h4{font-size:14px;margin-bottom:2px}
+.diagram-card .info p{font-size:11px;color:var(--text2)}
+.diagram-card .info .tag{display:inline-block;font-size:9px;padding:1px 6px;border-radius:3px;background:rgba(232,216,120,0.1);color:var(--accent1);margin-top:4px}
+
+/* ─── Expanded Author Grid ─── */
+.author-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:16px 0}
+.author-card{padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--card)}
+.author-card .name{font-size:14px;font-weight:700}
+.author-card .role{font-size:10px;color:var(--text2);margin:2px 0 4px}
+.author-card .story{font-size:11px;color:#707090;line-height:1.5}
+.author-card .where{font-size:10px;padding:2px 6px;border-radius:3px;display:inline-block;margin-top:4px}
+.quote-block{font-style:italic;font-size:13px;color:#606080;padding:12px 16px;border-left:2px solid #505070;margin:14px 0;background:rgba(255,255,255,0.015);border-radius:0 6px 6px 0}
+.quote-block .src{display:block;font-size:11px;color:#404060;margin-top:4px;font-style:normal}
+
+/* ─── Key Insight Grid ─── */
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.insight{font-size:12px;color:#a0a0b8;padding:8px 10px;background:rgba(232,216,120,0.03);border-radius:6px;border-left:2px solid var(--accent1)}
+.insight strong{color:var(--accent1)}
+
+/* ─── Metric Bars ─── */
+.metric-bar{height:16px;border-radius:8px;margin:4px 0;position:relative;overflow:hidden}
+.metric-bar .fill{height:100%;border-radius:8px}
+.metric-bar .lbl{position:absolute;left:8px;top:0;height:100%;display:flex;align-items:center;font-size:10px;font-weight:600;color:rgba(255,255,255,0.9)}
+.metric-bar .val{position:absolute;right:8px;top:0;height:100%;display:flex;align-items:center;font-size:10px;font-weight:600}
+
+/* ─── Company Grid ─── */
+.company-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:16px 0}
+.company-card{padding:14px;border-radius:8px;border:1px solid var(--border);background:var(--card)}
+.company-card .icon{font-size:22px;margin-bottom:4px}
+.company-card h4{font-size:14px;margin-bottom:2px}
+.company-card p{font-size:11px;color:#707090;line-height:1.5}
+.company-card .stats{display:flex;gap:8px;margin-top:6px}
+.company-card .stats span{font-size:9px;padding:2px 5px;border-radius:3px;background:rgba(255,255,255,0.03);color:#505070}
+
+/* ─── Company Table ─── */
+.company-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:12px}
+.company-table th{text-align:left;padding:8px 10px;color:#707090;font-weight:600;border-bottom:1px solid #1e1e35;font-size:11px}
+.company-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.03);color:#a0a0b0}
+.company-table td strong{color:#e0e0f0}
+
+/* ─── Timeline vertical ─── */
+.v-timeline{position:relative;margin:16px 0;padding:0 0 0 24px;border-left:2px solid #1e1e35}
+.v-event{margin-bottom:16px;position:relative}
+.v-event::before{content:'';position:absolute;left:-30px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--c,#e8d878);border:2px solid #0f0f1a}
+.v-event .yr{font-size:11px;color:#606080;font-weight:700}
+.v-event h4{font-size:14px;font-weight:700;margin:2px 0}
+.v-event p{font-size:12px;color:#8888a8;line-height:1.5}
+
+/* ─── Three col ─── */
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+
+/* ─── Responsive ─── */
+@media(max-width:768px){
+  .insight-grid,.three-col{grid-template-columns:1fr}
+  .diagram-gallery{grid-template-columns:1fr 1fr}
+  .author-grid,.company-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .diagram-gallery,.author-grid,.company-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-<!-- ═══ HEADER ═══ -->
 <header>
   <div class="logo">Transformer<span> · 费曼教室</span></div>
   <nav>
@@ -18,11 +85,12 @@
     <a href="#ch2">注意力</a>
     <a href="#ch3">多头</a>
     <a href="#ch4">架构</a>
-    <a href="#ch5">影响</a>
+    <a href="#ch5">论文</a>
+    <a href="#ch6">行业</a>
+    <a href="#ch7">图解</a>
   </nav>
 </header>
 
-<!-- ═══ HERO ═══ -->
 <section class="hero" id="top">
   <h1>Transformer &nbsp;是什么？</h1>
   <p>你手机里的 AI、网上的翻译软件、聊天机器人——<br>它们能"理解"你，全都靠同一项 2017 年的发明。</p>
@@ -30,38 +98,33 @@
   <div class="meta">适合：初二及以上 · 无需编程基础 · 15 分钟读完</div>
 </section>
 
-<!-- ═══ CHAPTER 0 ═══ -->
+<!-- Ch0: 教室故事 -->
 <section class="chapter" id="ch0">
   <div class="chapter-num">引言 · 一个教室的故事</div>
   <h2>如果你能同时听见所有人说话</h2>
-
   <div class="analogy">
     <div class="label">📖 故事时间</div>
     <p>想象你的教室里，老师想让大家一起翻译一句英文。传统的方法是——老师点名，第一排第一个同学先翻译第一个词，然后传给第二个同学翻译第二个词……<strong>每个人都得等前面的人处理完才能开始。</strong></p>
     <p style="margin-top:8px">但如果——<strong>全班同学同时讨论，每个人都能听到所有人的发言</strong>，一起讨论每个词的意思呢？那该多快啊！</p>
   </div>
-
-  <p style="font-size:14px;color:var(--text2);margin-top:12px"><strong>Transformer</strong> 就是那个"全班同时讨论"的办法。它让 AI 不再"逐字排队"，而是"一眼看清整句话"。<br>这个想法，来自 2017 年一篇 15 页的论文——《Attention Is All You Need》。</p>
-
+  <p style="font-size:14px;color:var(--text2);margin-top:12px"><strong>Transformer</strong> 就是那个"全班同时讨论"的办法。它让 AI 不再"逐字排队"，而是"一眼看清整句话"。这个想法，来自 2017 年一篇 15 页的论文——《Attention Is All You Need》。</p>
   <div class="quiz-box">
     <div class="q">为什么"同时讨论"比"一个一个传"更好？</div>
     <div class="options">
       <div class="opt">A. 因为每个人的答案不会被前面的人影响</div>
-      <div class="opt" style="border-color:var(--accent3)">B. 因为不用等——所有信息同时到达，速度更快</div>
+      <div class="opt" style="border-color:var(--accent3)">B. 因为不用等——所有信息同时到达，速度更快、不遗忘</div>
       <div class="opt">C. 因为"一个一个传"更准确</div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CHAPTER 1 ═══ -->
+<!-- Ch1: 为什么 -->
 <section class="chapter" id="ch1">
   <div class="chapter-num">第一章</div>
   <h2>为什么电脑需要一个新方法？</h2>
   <div class="subtitle">"我打了他"和"他打了我" — 顺序决定一切</div>
-
   <p>让电脑"理解"一句话，最核心的难题是：<strong>词的位置很重要。</strong></p>
   <p style="margin-top:8px">"小明打了小红"和"小红打了小明"— 词没变，顺序一变，意思完全相反。电脑必须知道：谁打了谁。</p>
-
   <div class="two-col">
     <div class="col-card">
       <div class="badge" style="background:rgba(240,112,80,0.15);color:#f07050">旧方法：RNN</div>
@@ -74,73 +137,43 @@
       <p>Transformer 把整句话同时"摊开"：每个词都同时看其他所有词。距离再远，一步就到。不会遗忘。</p>
     </div>
   </div>
-
   <div class="img-container">
-    <img src="images/rnn-vs-transformer.png" alt="RNN vs Transformer 对比图" loading="lazy">
+    <img src="images/rnn-vs-transformer.png" alt="RNN vs Transformer" loading="lazy">
     <div class="caption">RNN（左）一个词一个词处理，Transformer（右）所有词同时交互</div>
   </div>
-
   <div class="analogy">
     <div class="label">🧠 费曼小贴士</div>
-    <p><strong>RNN 的问题</strong>：就像你读一篇超长的小说，读到第 100 页时，已经想不起第 3 页的细节了。<br>
-    <strong>Transformer 的优势</strong>：就像你把 100 页同时摊在桌上，任何一页的内容，你都能立刻找到。</p>
+    <p><strong>RNN 的问题</strong>：就像你读一篇超长的小说，读到第 100 页时，已经想不起第 3 页的细节了。<br><strong>Transformer 的优势</strong>：就像你把 100 页同时摊在桌上，任何一页的内容，你都能立刻找到。</p>
   </div>
 </section>
 
-<!-- ═══ CHAPTER 2 ═══ -->
+<!-- Ch2: 自注意力 -->
 <section class="chapter" id="ch2">
   <div class="chapter-num">第二章</div>
   <h2>自注意力 — 全班同时讨论</h2>
   <div class="subtitle">每个词重新理解上下文，只需要一步</div>
-
   <p>Transformer 最核心的发明叫<strong>自注意力（Self-Attention）</strong>。名字听着复杂，但它背后的逻辑很简单。</p>
-
   <div class="analogy">
     <div class="label">🏫 还是那间教室</div>
-    <p>假设教室里有 5 个同学，每个同学代表一个词。现在他们要"讨论"这句话的意思。<br>
-    <strong>每个同学做三件事</strong>：</p>
+    <p>假设教室里有 5 个同学，每个同学代表一个词。现在他们要"讨论"这句话的意思。<strong>每个同学做三件事</strong>：</p>
     <div class="steps" style="margin-top:12px">
-      <div class="step">
-        <div class="num" style="background:rgba(240,184,112,0.2);color:#f0b870">Q</div>
-        <div><strong>Query · 提问</strong>："我想问大家什么？" — 每个词都会向所有其他词提问</div>
-      </div>
-      <div class="step">
-        <div class="num" style="background:rgba(120,184,240,0.2);color:#78b8f0">K</div>
-        <div><strong>Key · 回答</strong>："我能回答什么？" — 每个词都会回应别人的提问</div>
-      </div>
-      <div class="step">
-        <div class="num" style="background:rgba(120,216,120,0.2);color:#78d878">V</div>
-        <div><strong>Value · 内容</strong>："我携带什么信息？" — 每个词都带着自己的含义</div>
-      </div>
+      <div class="step"><div class="num" style="background:rgba(240,184,112,0.2);color:#f0b870">Q</div><div><strong>Query · 提问</strong>："我想问大家什么？" — 每个词都会向所有其他词提问</div></div>
+      <div class="step"><div class="num" style="background:rgba(120,184,240,0.2);color:#78b8f0">K</div><div><strong>Key · 回答</strong>："我能回答什么？" — 每个词都会回应别人的提问</div></div>
+      <div class="step"><div class="num" style="background:rgba(120,216,120,0.2);color:#78d878">V</div><div><strong>Value · 内容</strong>："我携带什么信息？" — 每个词都带着自己的含义</div></div>
     </div>
   </div>
-
-  <p>整个过程分为<strong>四个步骤</strong>：</p>
-
+  <p><strong>通俗理解：</strong>Q 和 K 决定"谁该关注谁"，V 决定"关注之后得到什么"。整个过程就像全班同时讨论：每个人写下问题（Q），贴出自己能回答的标签（K），然后分享自己知道的内容（V）。最终每个词的新含义 = 综合所有人的意见。</p>
   <div class="steps">
-    <div class="step">
-      <div class="num" style="background:var(--accent2);color:#0a0a12">①</div>
-      <div><strong>所有人互相提问</strong><br><span style="color:var(--text2);font-size:13px">每个词计算自己与所有其他词的相关度。词与词之间形成一个"关系网"。</span></div>
-    </div>
-    <div class="step">
-      <div class="num" style="background:var(--accent4);color:#0a0a12">②</div>
-      <div><strong>平衡影响力</strong><br><span style="color:var(--text2);font-size:13px">除以 √64（论文里最精巧的工程细节），防止某些"嗓门大"的词喧宾夺主。</span></div>
-    </div>
-    <div class="step">
-      <div class="num" style="background:var(--accent5);color:#0a0a12">③</div>
-      <div><strong>归一化</strong><br><span style="color:var(--text2);font-size:13px">通过 softmax 把权重变成百分比——每个词对其他词的关注度加起来正好 100%。</span></div>
-    </div>
-    <div class="step">
-      <div class="num" style="background:var(--accent3);color:#0a0a12">④</div>
-      <div><strong>综合输出</strong><br><span style="color:var(--text2);font-size:13px">每个词的新含义 = 所有词的含义 × 它们对这个词的关注度，加权求和。</span></div>
-    </div>
+    <div class="step"><div class="num" style="background:var(--accent2);color:#0a0a12">①</div><div><strong>计算相关度</strong> — 每个词和其他所有的词算"相似度"：这个词和那个词有多大关系？</div></div>
+    <div class="step"><div class="num" style="background:var(--accent4);color:#0a0a12">②</div><div><strong>平衡影响力</strong> — 除以 √64，防止某些"嗓门大"的词喧宾夺主（论文最精巧的工程细节）</div></div>
+    <div class="step"><div class="num" style="background:var(--accent5);color:#0a0a12">③</div><div><strong>转成百分比</strong> — 每个词对其他词的关注度加起来正好 100%（Softmax 归一化）</div></div>
+    <div class="step"><div class="num" style="background:var(--accent3);color:#0a0a12">④</div><div><strong>加权综合</strong> — 每个词的新含义 = 所有词的含义 × 关注度，然后相加</div></div>
   </div>
-
   <div class="img-container">
-    <img src="images/self-attention.png" alt="自注意力机制详解图" loading="lazy">
+    <img src="images/self-attention.png" alt="自注意力" loading="lazy">
     <div class="caption">自注意力：每个输出词 = 所有输入词的加权混合，权重由 QK 相似度决定</div>
   </div>
-
+  <p style="font-size:13px;color:var(--text2);text-align:center;margin:8px 0"><a href="07-attention-heatmap.html" style="color:var(--accent1)">🎯 点此打开交互式自注意力热力图 →</a> 亲自观察词与词之间的关注度</p>
   <div class="quiz-box">
     <div class="q">自注意力是怎么知道"他"指的是"小明"的？</div>
     <div class="options">
@@ -151,14 +184,12 @@
   </div>
 </section>
 
-<!-- ═══ CHAPTER 3 ═══ -->
+<!-- Ch3: 多头 -->
 <section class="chapter" id="ch3">
   <div class="chapter-num">第三章</div>
   <h2>多头注意力 — 八个不同角度的专家</h2>
   <div class="subtitle">一个"头"看语法，一个"头"看语义，各司其职</div>
-
   <p>如果只有一个"注意力"机制，那就像全班只有一个同学在讨论——能获得的信息很有限。Transformer 的做法更聪明：<strong>同时用 8 组注意力，每组关注不同的东西。</strong></p>
-
   <div class="analogy">
     <div class="label">👥 8 位专家同时工作</div>
     <p>想象 8 位不同领域的专家同时分析同一句话：</p>
@@ -169,164 +200,197 @@
       <div class="info-card"><div class="icon" style="color:#c878f0">📏</div><h4>距离专家</h4><p>关注长距离依赖——头尾的词有没有关系</p></div>
     </div>
   </div>
-
   <p><strong>关键洞察</strong>：没有人告诉这些"专家"各自要看什么。它们是在训练过程中<strong>自己学会分工的</strong>——有的自然分化成了语法专家，有的成了语义专家。这是 Transformer 最令人惊叹的特性之一。</p>
-
   <div class="img-container">
-    <img src="images/multihead.png" alt="多头注意力图解" loading="lazy">
-    <div class="caption">8 个头 × 64 维 = 512 维 · 每个头关注不同的语义子空间 · 总计算量 ≈ 单头全维度</div>
+    <img src="images/multihead.png" alt="多头注意力" loading="lazy">
+    <div class="caption">8 个头 × 64 维 = 512 维 · 每个头关注不同的语义子空间</div>
   </div>
-
-  <p style="font-size:14px;color:var(--text2)"><strong>Shazeer 的贡献</strong>：多头注意力是 Noam Shazeer（就是那篇新闻里加入 OpenAI 的那个人）的核心设计。这个设计至今没有变——GPT-4 的注意力头数更大，但结构一模一样。</p>
+  <p style="font-size:14px;color:var(--text2)"><strong>Shazeer 的贡献</strong>：多头注意力是 Noam Shazeer 的核心设计。这个设计至今没有变——GPT-4 的注意力头数更大（几十到上百个），但结构一模一样。</p>
 </section>
 
-<!-- ═══ CHAPTER 4 ═══ -->
+<!-- Ch4: 完整架构 -->
 <section class="chapter" id="ch4">
   <div class="chapter-num">第四章</div>
   <h2>完整的 Transformer 架构</h2>
   <div class="subtitle">编码器读文章，解码器写作文</div>
-
   <p>Transformer 的整体架构分为两大块，就像语文课上的两个活动：</p>
-
   <div class="two-col">
     <div class="col-card">
       <div class="badge" style="background:rgba(120,184,240,0.15);color:#78b8f0">Encoder · 编码器</div>
       <h4>阅读理解</h4>
-      <p>把输入句子"读懂"——每个词都看过所有其他词，得到一组富含上下文信息的向量。<br><br>
-      <strong>6 层</strong>，每层：自注意力 → 归一化 → 前馈网络 → 归一化</p>
+      <p>把输入句子"读懂"——每个词都看过所有其他词，得到一组富含上下文信息的向量。<br><strong>6 层</strong>，每层：自注意力 → 归一化 → 前馈网络 → 归一化</p>
     </div>
     <div class="col-card">
       <div class="badge" style="background:rgba(240,184,112,0.15);color:#f0b870">Decoder · 解码器</div>
       <h4>写作文</h4>
-      <p>一个字一个字地生成输出——但<strong>看不到后面的词</strong>（用遮罩挡住未来信息），同时随时参考编码器的输出。<br><br>
-      <strong>6 层</strong>，每层：遮罩自注意力 → 交叉注意力 → 前馈网络</p>
+      <p>一个字一个字地生成输出——但<strong>看不到后面的词</strong>（用遮罩挡住未来信息），同时随时参考编码器的输出。<br><strong>6 层</strong>，每层：遮罩自注意力 → 交叉注意力 → 前馈网络</p>
     </div>
   </div>
-
   <div class="img-container">
-    <img src="images/architecture.png" alt="Transformer 完整架构图" loading="lazy">
-    <div class="caption">左侧 Encoder（阅读理解） · 右侧 Decoder（写作文） · 金色箭头 = 信息从 Encoder 流向 Decoder</div>
+    <img src="images/architecture.png" alt="Transformer 架构" loading="lazy">
+    <div class="caption">左侧 Encoder（阅读理解）· 右侧 Decoder（写作文）</div>
   </div>
-
   <div class="analogy">
     <div class="label">🧩 位置编码 — 没有"座位号"，大家看起来都一样</div>
     <p>RNN 按顺序处理，天然知道词的先后。但 Transformer 把所有词同时输入——<strong>如果不说顺序，电脑就不知道哪个词在第几个位置</strong>。</p>
     <p style="margin-top:6px">解决办法：在输入中<strong>叠加正弦波</strong>作为"座位号"。不同位置叠加的波形不同，模型通过波形判断位置。正弦波的妙处：<strong>你告诉位置 A，它能算出位置 A+1</strong>，模型因此也能理解相对位置。</p>
   </div>
-
   <div class="quiz-box">
     <div class="q">编码器和解码器的最大区别是什么？</div>
     <div class="options">
       <div class="opt">A. 编码器有交叉注意力，解码器没有</div>
-      <div class="opt" style="border-color:var(--accent3)">B. 解码器有遮罩（Mask），不能看未来的词</div>
+      <div class="opt" style="border-color:var(--accent3)">B. 解码器有遮罩（Mask），不能看未来的词——它只能看"已写好的"内容</div>
       <div class="opt">C. 编码器层数更多</div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CHAPTER 5 ═══ -->
+<!-- Ch5: 论文深度解读 -->
 <section class="chapter" id="ch5">
   <div class="chapter-num">第五章</div>
-  <h2>一篇论文，改变了整个世界</h2>
-  <div class="subtitle">GPT · BERT · Claude · Gemini — 全部起源于这 15 页</div>
+  <h2>一篇论文的解剖 — "Attention Is All You Need"</h2>
+  <div class="subtitle">15 页纸，8 位作者，改变了 AI 的走向</div>
 
-  <p>Transformer 的发表，把 AI 从"设计更精妙的架构"时代推进到了"用更多的数据和算力"时代。这场变革的意义，怎么强调都不过分。</p>
+  <div class="quote-block">"The Transformer is the first sequence transduction model based entirely on attention, replacing the recurrent layers most commonly used in encoder-decoder architectures with multi-headed self-attention."<span class="src">— Vaswani et al., 论文摘要 · NeurIPS 2017</span></div>
+
+  <div class="insight-grid">
+    <div class="insight"><strong>🎯 核心贡献</strong> — 第一个完全丢弃 RNN/CNN 的序列模型，只靠注意力机制</div>
+    <div class="insight"><strong>⚡ 效率突破</strong> — 训练速度比 RNN 快 3-5 倍，推理可并行（RNN 必须串行）</div>
+    <div class="insight"><strong>🏆 精度碾压</strong> — WMT 2014 英→德 BLEU 28.4（历史最高），训练仅 3.5 天·8GPU</div>
+    <div class="insight"><strong>🧱 架构奠基石</strong> — 6×512 维 Encoder-Decoder · 8 头注意力 · 成为所有 LLM 的蓝本</div>
+  </div>
+
+  <h3 style="font-size:15px;color:var(--accent1);margin-top:20px">📊 论文关键数据</h3>
+  <div class="three-col" style="margin:10px 0">
+    <div class="stat-card"><div class="num" style="color:var(--accent2)">28.4</div><div class="lbl">BLEU 英→德 (SOTA)</div><div class="lbl" style="font-size:9px;color:#505070">超越 RNN 最佳 26.7</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--accent3)">41.8</div><div class="lbl">BLEU 英→法 (SOTA)</div><div class="lbl" style="font-size:9px;color:#505070">超越 RNN 最佳 39.1</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--accent4)">65M</div><div class="lbl">Base 模型参数</div><div class="lbl" style="font-size:9px;color:#505070">Big 模型 213M 参数</div></div>
+  </div>
+  <div class="three-col" style="margin:4px 0 16px">
+    <div class="stat-card"><div class="num" style="color:var(--accent5)">~$100</div><div class="lbl">2017 年训练成本</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--accent6)">~3x</div><div class="lbl">训练加速 vs RNN</div></div>
+    <div class="stat-card"><div class="num" style="color:var(--accent1)">150,000+</div><div class="lbl">今日引用量</div></div>
+  </div>
+
+  <div class="metric-bar"><div class="fill" style="width:100%;background:linear-gradient(90deg,#78b8f0,#e8d878)"></div><div class="lbl">Transformer 训练速度</div><div class="val" style="color:#0a0a12">3.5 天</div></div>
+  <div class="metric-bar" style="height:14px"><div class="fill" style="width:42%;background:rgba(240,120,128,0.5)"></div><div class="lbl" style="font-size:9px">最佳 RNN 训练</div><div class="val" style="color:#707090;font-size:9px">~8 天</div></div>
+
+  <h3 style="font-size:15px;color:var(--accent1);margin-top:20px">🔑 论文中容易被忽略的关键细节</h3>
+  <div class="insight-grid">
+    <div class="insight"><strong>1️⃣ LayerNorm 的位置</strong> — 原文 Post-Norm（残差后），今天几乎所有模型改用 Pre-Norm。这一个小改动对训练稳定性影响巨大。</div>
+    <div class="insight"><strong>2️⃣ 学习率策略</strong> — "Warmup + Inverse Square Root Decay"：前 4000 步线性升温到 0.0007，然后按步数平方根衰减。至今仍是标准。</div>
+    <div class="insight"><strong>3️⃣ Label Smoothing</strong> — ε=0.1 的标签平滑，让模型不过度自信，带来 +0.5 BLEU 提升。被广泛沿用。</div>
+    <div class="insight"><strong>4️⃣ Dropout 的巧用</strong> — 在残差连接和注意力权重上分别使用 dropout=0.1，防止过拟合同时增加注意力头的多样性。</div>
+  </div>
+
+  <p style="font-size:13px;color:var(--text2);text-align:center;margin:14px 0"><a href="05-paper-impact.html" style="color:var(--accent1)">📄 打开完整论文解读页 →</a> 含引用增长曲线、完整时间线、技术遗产</p>
+</section>
+
+<!-- Ch6: 行业格局 -->
+<section class="chapter" id="ch6">
+  <div class="chapter-num">第六章</div>
+  <h2>一篇论文，改变了整个行业</h2>
+  <div class="subtitle">从学术论文到万亿级市场 · 8 年重塑计算产业</div>
 
   <div class="analogy">
     <div class="label">💡 最大的改变</div>
-    <p><strong>之前</strong>：研究者花费数年设计适合特定任务的精巧网络结构。<br>
-    <strong>之后</strong>：用同一个 Transformer 架构，堆更多的数据和算力——GPT、BERT、Claude，全部是 Transformer 的变体。<br>
-    <strong>一句话</strong>：Transformer 把 AI 从"手工作坊"变成了"工业流水线"。</p>
+    <p><strong>偏向前（2012-2017）</strong>：研究者花费数年设计适配特定任务的精巧网络（CNN 专看图像，RNN 专读文字，LSTM 专记长句）。<br><strong>偏向後（2018-至今）</strong>：用同一个 Transformer 架构，堆更多的数据和算力——GPT、BERT、Claude、Gemini，全部是 Transformer 的变体。<br><strong>一句话</strong>：Transformer 把 AI 从"手工作坊"变成了"工业流水线"。</p>
   </div>
 
-  <div class="stats-row">
-    <div class="stat-card"><div class="num" style="color:var(--accent2)">150,000+</div><div class="lbl">论文引用量</div></div>
-    <div class="stat-card"><div class="num" style="color:var(--accent4)">15</div><div class="lbl">页数</div></div>
-    <div class="stat-card"><div class="num" style="color:var(--accent3)">8</div><div class="lbl">作者 · "八子"</div></div>
-    <div class="stat-card"><div class="num" style="color:var(--accent5)">∞</div><div class="lbl">仍在扩展的上限</div></div>
+  <h3 style="font-size:15px;color:var(--accent1);margin-top:16px">🏢 行业格局图</h3>
+  <table class="company-table">
+    <tr><th>公司</th><th>代表模型</th><th>架构</th><th>市值/GMV</th><th>特色</th></tr>
+    <tr><td><strong>OpenAI</strong></td><td>GPT-4, o1/o3</td><td>Decoder-Only</td><td>~$300B (2026)</td><td>拥有 2/8 作者 (Kaiser + Shazeer)</td></tr>
+    <tr><td><strong>Google</strong></td><td>BERT, PaLM, Gemini</td><td>Encoder/Decoder</td><td>~$2T (整体)</td><td>Transformer 发源地 · 八子原始团队</td></tr>
+    <tr><td><strong>Anthropic</strong></td><td>Claude Opus</td><td>Decoder-Only</td><td>~$60B</td><td>安全优先 · Karpathy 2026 年加入</td></tr>
+    <tr><td><strong>Meta</strong></td><td>LLaMA 系列</td><td>Decoder-Only</td><td>开源</td><td>开源生态 · 推理效率专家</td></tr>
+    <tr><td><strong>Microsoft</strong></td><td>Phi 系列</td><td>Decoder-Only</td><td>~$3T</td><td>投 OpenAI $13B + Copilot 全家桶</td></tr>
+    <tr><td><strong>xAI</strong></td><td>Grok</td><td>Decoder-Only</td><td>~$75B</td><td>实时数据 · X/Twitter 集成</td></tr>
+    <tr><td><strong>DeepSeek</strong></td><td>DeepSeek-V3</td><td>MoE Decoder</td><td>未上市</td><td>中国 · 蒸馏 + 极致效率</td></tr>
+    <tr><td><strong>Mistral AI</strong></td><td>Mistral, Mixtral</td><td>MoE Decoder</td><td>~$6B</td><td>法国 · 开源 + MoE 探索者</td></tr>
+    <tr><td><strong>百度</strong></td><td>文心一言</td><td>Encoder-Decoder</td><td>~$30B</td><td>中国 · 搜索 + 云 + 自动驾驶</td></tr>
+    <tr><td><strong>Cohere</strong></td><td>Command R+</td><td>Decoder-Only</td><td>~$5B</td><td>由作者 Aidan Gomez 创立</td></tr>
+  </table>
+
+  <h3 style="font-size:15px;color:var(--accent1);margin-top:20px">✏️ Transformer 八子 — 后来的故事</h3>
+  <div class="author-grid">
+    <div class="author-card"><div class="name" style="color:var(--accent4)">Noam Shazeer</div><div class="role">多头注意力发明者 · 第二作者</div><div class="story">Character.AI 创始人 → Google 以 $2.7B 买回 → 2026 年加入 OpenAI 任架构研究负责人。AI 历史上最贵的"回锅肉"。</div><div class="where" style="background:rgba(120,216,120,0.1);color:var(--accent3)">→ OpenAI</div></div>
+    <div class="author-card"><div class="name" style="color:var(--accent2)">Ashish Vaswani</div><div class="role">第一作者</div><div class="story">Google Brain → 联合创立 Adept AI（通用 AI 助手）。2024 年 Adept 部分团队被 Amazon 挖走。</div><div class="where" style="background:rgba(120,184,240,0.1);color:var(--accent2)">→ Adept AI</div></div>
+    <div class="author-card"><div class="name" style="color:var(--accent3)">Aidan Gomez</div><div class="role">第三作者</div><div class="story">Google → 创立 Cohere（企业级 LLM，估值 $5B+）。他曾在采访中说："我们当时完全不知道这论文会改变世界。"</div><div class="where" style="background:rgba(78,168,120,0.1);color:#4ea878">→ Cohere</div></div>
+    <div class="author-card"><div class="name" style="color:var(--accent6)">Lukasz Kaiser</div><div class="role">推理模型先驱</div><div class="story">五年前离开 Google 加入 OpenAI，主导 o1/o3 推理模型开发。被公认是"让 GPT 会推理"的关键人物。</div><div class="where" style="background:rgba(232,216,120,0.1);color:var(--accent1)">→ OpenAI</div></div>
+    <div class="author-card"><div class="name" style="color:#c878f0">Llion Jones</div><div class="role">第五作者</div><div class="story">Google → 日本创立 Sakana AI（"鱼"）。做"自然启发 AI"——用进化算法代替反向传播。2024 年获日本最大 AI 投资。</div><div class="where" style="background:rgba(200,120,240,0.1);color:#c878f0">→ Sakana AI</div></div>
+    <div class="author-card"><div class="name">Niki Parmar</div><div class="role">核心贡献者</div><div class="story">Google → 联合创立 Adept AI。2024 年 Adept 部分核心团队被 Amazon 挖走。</div><div class="where" style="background:rgba(255,255,255,0.05);color:#8888a8">→ Adept → Amazon</div></div>
+    <div class="author-card"><div class="name">Jakob Uszkoreit</div><div class="role">联合发明人</div><div class="story">Google → 创立 Inceptive（AI 设计 RNA 药物）。从语言模型思维跨界到生物制药。</div><div class="where" style="background:rgba(255,255,255,0.05);color:#8888a8">→ Inceptive</div></div>
+    <div class="author-card"><div class="name">Illia Polosukhin</div><div class="role">第八作者</div><div class="story">Google → NEAR Protocol（区块链基础设施，Layer 1）。从 Transformer 跳到 Web3，成为 NEAR 创始人。</div><div class="where" style="background:rgba(255,255,255,0.05);color:#8888a8">→ NEAR Protocol</div></div>
   </div>
 
-  <div class="img-container">
-    <img src="images/legacy.png" alt="Transformer 影响与历史" loading="lazy">
-    <div class="caption">从 Transformer 到 GPT/BERT/Claude/Gemini · 短短 8 年改变了 AI 行业格局</div>
+  <h3 style="font-size:15px;color:var(--accent1);margin-top:16px">📅 关键时间线 — 从论文到行业</h3>
+  <div class="v-timeline">
+    <div class="v-event" style="--c:#e8d878"><div class="yr">2017 · 论文发表</div><h4>Google 8 位作者公开 Transformer</h4><p>在机器翻译任务上全面超越 RNN。开源代码 + 论文，给整个研究社区一份厚礼。</p></div>
+    <div class="v-event" style="--c:#78b8f0"><div class="yr">2018 · 双星爆发</div><h4>GPT (OpenAI) + BERT (Google)</h4><p>两篇论文同时奠基了"预训练 + 微调"范式。GPT 证明 Decoder-Only 也能工作；BERT 双向 Encoder 拿下 11 项 SOTA。</p></div>
+    <div class="v-event" style="--c:#78d878"><div class="yr">2019 · 扩展定律诞生</div><h4>GPT-2 (1.5B) → "更多的数据和参数更好"</h4><p>OpenAI 发现模型大小、数据量、计算量之间存在可预测的关系——"大力出奇迹"有了理论支撑。</p></div>
+    <div class="v-event" style="--c:#f0b870"><div class="yr">2020 · GPT-3 时代</div><h4>GPT-3 (175B) — 涌现能力被发现</h4><p>千亿参数模型可以"零样本"完成翻译、写诗、甚至简单编程。不需要专门训练。AI 社区震惊。</p></div>
+    <div class="v-event" style="--c:#c878f0"><div class="yr">2021 · 跨出文本</div><h4>DALL·E, CLIP, ViT — Transformer 理解图像</h4><p>ViT 把图像切成"词块"输入 Transformer，DALL·E 用 Transformer 做文字→图像生成。从此 Transformer 统治所有模态。</p></div>
+    <div class="v-event" style="--c:#f078a0"><div class="yr">2022 · 出圈</div><h4>ChatGPT — 2 个月 1 亿用户</h4><p>Transformer 第一次有了大众可及的界面。成为史上增长最快的应用。</p></div>
+    <div class="v-event" style="--c:#e8d878"><div class="yr">2023-2026 · 格局形成</div><h4>万亿参数 · 多模态 · 推理模型</h4><p>GPT-4 多模态，Claude 安全可控，Gemini 原生多模态。架构变化越来越小——Transformer 的基础设计几乎没人敢动。</p></div>
   </div>
 
-  <!-- 8 Authors -->
-  <h3 style="margin-top:24px;font-size:16px;color:var(--accent1)">✏️ Transformer 八子 — 后来的故事</h3>
-  <div class="people-grid">
-    <div class="person"><div class="name" style="color:var(--accent4)">Noam Shazeer</div><div class="role">多头注意力设计者</div><div class="desc">Character.AI 创始人 → Google（$2.7B 买回）→ 2026 加入 OpenAI 任架构研究负责人</div></div>
-    <div class="person"><div class="name" style="color:var(--accent2)">Ashish Vaswani</div><div class="role">第一作者</div><div class="desc">Google Brain → 联合创立 Adept AI（自适应 AI 助手）</div></div>
-    <div class="person"><div class="name" style="color:var(--accent3)">Aidan Gomez</div><div class="role">联合创始人</div><div class="desc">Google → 创立 Cohere（企业级 LLM 平台，估值 $5B+）</div></div>
-    <div class="person"><div class="name" style="color:var(--accent6)">Lukasz Kaiser</div><div class="role">推理模型先驱</div><div class="desc">五年前加入 OpenAI，主导 o1/o3 推理模型开发</div></div>
-    <div class="person"><div class="name" style="color:var(--accent5)">Llion Jones</div><div class="role">第五作者</div><div class="desc">Google → 创立 Sakana AI（日本，自然启发 AI 研究）</div></div>
-    <div class="person"><div class="name">Niki Parmar</div><div class="role">核心贡献者</div><div class="desc">Google → 联合创立 Adept AI</div></div>
-    <div class="person"><div class="name">Jakob Uszkoreit</div><div class="role">联合发明人</div><div class="desc">Google → Inceptive（用 AI 设计 RNA 药物）</div></div>
-    <div class="person"><div class="name">Illia Polosukhin</div><div class="role">第八作者</div><div class="desc">Google → NEAR Protocol（区块链，Layer 1 基础设施）</div></div>
+  <p style="font-size:13px;color:var(--text2);text-align:center;margin:16px 0"><a href="06-battle-chart.html" style="color:var(--accent1)">⚔️ 打开完整性能对比 →</a> Transformer vs RNN · BLEU · 训练时间 · 历史影响</p>
+</section>
+
+<!-- Ch7: 互动图解 -->
+<section class="chapter" id="ch7">
+  <div class="chapter-num">互动图解 · 动手试试</div>
+  <h2>打开浏览器，亲身感受 Transformer</h2>
+  <div class="subtitle">以下三张交互式图解，每一张都可以点开、查看、探索——在浏览器中直接运行</div>
+
+  <div class="diagram-gallery">
+    <a href="07-attention-heatmap.html" class="diagram-card" target="_blank">
+      <div class="preview">🎯</div>
+      <div class="info">
+        <h4>自注意力热力图</h4>
+        <p>"我非常喜欢吃红红的苹果"——每个词对每个词的关注度，用颜色的冷暖直观展示。</p>
+        <span class="tag">交互式 · 可视化</span>
+      </div>
+    </a>
+    <a href="05-paper-impact.html" class="diagram-card" target="_blank">
+      <div class="preview">📄</div>
+      <div class="info">
+        <h4>论文深度解读</h4>
+        <p>引用增长曲线、关键时间线、模型家族树、4 大技术遗产——15 页论文的全景分析。</p>
+        <span class="tag">数据图表 · 时间线</span>
+      </div>
+    </a>
+    <a href="06-battle-chart.html" class="diagram-card" target="_blank">
+      <div class="preview">⚔️</div>
+      <div class="info">
+        <h4>Transformer vs RNN 对决</h4>
+        <p>BLEU 分数对比、训练速度、架构差异、论文的关键数字——为什么 Transformer 全面碾压。</p>
+        <span class="tag">数据对比 · 性能图</span>
+      </div>
+    </a>
   </div>
 
-  <!-- Companies -->
-  <h3 style="margin-top:24px;font-size:16px;color:var(--accent1)">🏢 行业格局 — 谁在用 Transformer</h3>
-  <div class="card-grid">
-    <div class="info-card"><div class="icon">🤖</div><h4>OpenAI</h4><p>GPT 系列全员 Transformer。拥有两位论文作者（Kaiser + 新加入的 Shazeer）。押注"从 Transformer 到 ASI"。</p></div>
-    <div class="info-card"><div class="icon">🔵</div><h4>Google</h4><p>BERT、PaLM、Gemini 全部基于 Transformer。两头开花——既做搜索（BERT），又做生成（Gemini）。但面临 Shazeer 出走的损失。</p></div>
-    <div class="info-card"><div class="icon">🟣</div><h4>Anthropic</h4><p>Claude 系列 Transformer-based。Karpathy 2026 年 5 月加入，用 Claude 加速预训练。约 90% 内部代码由 Claude Code 生成。</p></div>
-    <div class="info-card"><div class="icon">🟢</div><h4>Meta</h4><p>LLaMA 系列开源 Transformer 模型。不走"最大最强"路线，深耕开源生态和推理效率。</p></div>
-  </div>
-
-  <!-- Timeline -->
-  <h3 style="margin-top:24px;font-size:16px;color:var(--accent1)">📅 关键时间线</h3>
-  <div class="timeline-strip">
-    <div class="tl-point"><div class="tl-dot" style="background:var(--accent1)"></div><div class="tl-year">2017</div><div class="tl-event">Transformer 论文发表</div></div>
-    <div class="tl-point"><div class="tl-dot" style="background:var(--accent2)"></div><div class="tl-year">2018</div><div class="tl-event">GPT + BERT 诞生</div></div>
-    <div class="tl-point"><div class="tl-dot" style="background:var(--accent4)"></div><div class="tl-year">2020</div><div class="tl-event">GPT-3 · 1750亿参数</div></div>
-    <div class="tl-point"><div class="tl-dot" style="background:var(--accent3)"></div><div class="tl-year">2022</div><div class="tl-event">ChatGPT 出圈</div></div>
-    <div class="tl-point"><div class="tl-dot" style="background:var(--accent6)"></div><div class="tl-year">2023</div><div class="tl-event">GPT-4 多模态</div></div>
-    <div class="tl-point"><div class="tl-dot" style="background:var(--accent1)"></div><div class="tl-year">2026</div><div class="tl-event">Shazeer 加入 OpenAI</div></div>
-  </div>
-
-  <!-- Paper Quote -->
-  <div class="analogy" style="margin-top:20px">
-    <div class="label">📜 原文</div>
-    <p style="font-style:italic;color:var(--text2)">"The Transformer is the first sequence transduction model based entirely on attention, replacing the recurrent layers most commonly used in encoder-decoder architectures with multi-headed self-attention."</p>
-    <p style="font-size:12px;color:#505070;margin-top:6px;text-align:right">— Vaswani et al., NeurIPS 2017</p>
+  <div class="analogy">
+    <div class="label">🤔 看完所有图解之后，试试能不能回答</div>
+    <p>① QKV 分别代表什么？为什么需要三个不同东西？<br>
+    ② 一个 6 词句子，自注意力要做多少次 QK 计算？<br>
+    ③ 为什么说 Transformer 的推理速度比 RNN 快？</p>
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
 <footer>
   <p>Transformer 费曼教室 · 用故事理解 AI 的核心</p>
-  <p style="margin-top:4px">图文内容基于 Vaswani et al. (2017) "Attention Is All You Need" · 费曼教学法·Arsite 制作</p>
-  <p style="margin-top:4px"><a href="#top">↑ 回到顶部</a></p>
+  <p style="margin-top:4px">基于 Vaswani et al. (2017) "Attention Is All You Need" · 费曼教学法 · Ariste 制作</p>
+  <p style="margin-top:4px">🎓 8 章 3 图解 · 适合初二及以上 · <a href="#top">↑ 回到顶部</a></p>
 </footer>
 
 <script>
-// Scroll spy for nav
 const sections = document.querySelectorAll('.chapter');
 const links = document.querySelectorAll('nav a');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      links.forEach(l => l.classList.remove('active'));
-      const id = e.target.id;
-      document.querySelector(`nav a[href="#${id}"]`)?.classList.add('active');
-    }
-  });
-}, { threshold: 0.3 });
-sections.forEach(s => observer.observe(s));
-
-// Quiz interactivity
-document.querySelectorAll('.quiz-box .opt').forEach(opt => {
-  opt.addEventListener('click', function() {
-    const parent = this.closest('.quiz-box');
-    // Highlight selection
-    parent.querySelectorAll('.opt').forEach(o => {
-      o.style.borderColor = '';
-      o.style.background = '';
-    });
-    this.style.borderColor = '#e8d878';
-    this.style.background = 'rgba(232,216,120,0.08)';
-  });
-});
+const observer = new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));document.querySelector(`nav a[href="#${e.target.id}"]`)?.classList.add('active')}})},{threshold:0.3});
+sections.forEach(s=>observer.observe(s));
+document.querySelectorAll('.quiz-box .opt').forEach(o=>{o.addEventListener('click',function(){const p=this.closest('.quiz-box');p.querySelectorAll('.opt').forEach(x=>{x.style.borderColor='';x.style.background=''});this.style.borderColor='#e8d878';this.style.background='rgba(232,216,120,0.08)'})});
 </script>
 </body>
 </html>
